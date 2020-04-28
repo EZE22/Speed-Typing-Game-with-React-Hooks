@@ -4,14 +4,19 @@ import './App.css';
 function App() {
     const [text, setText] = useState("")
     const [timeRemaining, setTimeRemaining] = useState(5)
+    const [gameStart, setGameStart] = useState(false)
+
+    function handleClick() {
+        setGameStart(!gameStart)
+    }
 
     useEffect(() => {
-        if(timeRemaining > 0) {
+        if(gameStart && timeRemaining > 0) {
             setTimeout(() => {
                 setTimeRemaining(prevState => prevState - 1)
             }, 1000)
         }
-    }, [timeRemaining])
+    }, [gameStart, timeRemaining])
 
     function handleTextChange(event){
         const {value} = event.target
@@ -27,7 +32,7 @@ function App() {
         <h1>Speed Typing Game</h1>
         <textarea value={text} onChange={handleTextChange}/>
         <h4>Time Remaining: {timeRemaining}</h4>
-        <button onClick={() => console.log(calculateWordCount(text))}>Start</button>
+        <button onClick={handleClick}>Start</button>
         <h1>Word Count: ???</h1>
     </div>
   );
